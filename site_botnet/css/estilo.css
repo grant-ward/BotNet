@@ -1,0 +1,51 @@
+* {
+	margin:0;
+	padding:0;
+}
+
+body {
+	background: black;
+}
+
+/*Menu fixo*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+}
+
+a:hover {
+	transition-duration: 1.5s;
+	background: black;
+}
+
+/*Corpo*/
+.main {
+	max-width: 90%;
+    padding: 16px;
+    margin-top: 60px;
+    
+}
+
+img {
+    display: block;
+    margin: auto;
+    width: 100%;
+    padding-left: 40px;
+}
