@@ -46,6 +46,7 @@ def atack():
         ddos.send(message)
     except:
         usage(soc)
+    print("Atacando -> ", host)
     ddos.close()  
 
 
