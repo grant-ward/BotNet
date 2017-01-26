@@ -9,3 +9,5 @@ py -m pip install winreglib
 py -m pip install pyinstaller
 py -m pip install pillow
 py -m pip install pypiwin32
+echo "Dependencies installed!"
+pause
