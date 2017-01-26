@@ -22,7 +22,10 @@ if os.path.isfile("settings.py"):
 else:
     print("\n\nCreating a configurantion file..")
     time.sleep(.5)
-    subprocess.call(" <nul (set/p z=) >filename", shell=True)
+    if os.name=="nc":
+					subprocess.call("<nul (set/p z=) >filename", shell=True)
+    if os.name=="posix":
+					subprocess.call("touch settings.py",shell=True)
     print("File created! going to configuration phase!")
 script = open("settings.py","w")
 
